@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
+import prisma from "../db/prisma-client";
 
 export async function getAllReview(req: Request, res: Response) {
-  const reviews = await prisma?.review.findMany();
+  const reviews = await prisma.review.findMany();
   return res.json(reviews);
 }
 
 export async function getReviewById(req: Request, res: Response) {
   const { id } = req.params;
-  const review = await prisma?.review.findUnique({
+  const review = await prisma.review.findUnique({
     where: {
       id: Number(id),
     },
@@ -17,7 +18,7 @@ export async function getReviewById(req: Request, res: Response) {
 
 export async function createReview(req: Request, res: Response) {
   const { album, artist, content, genre, rating, title, author } = req.body;
-  const review = await prisma?.review.create({
+  const review = await prisma.review.create({
     data: {
       album,
       artist,
@@ -34,7 +35,7 @@ export async function createReview(req: Request, res: Response) {
 export function updateReview(req: Request, res: Response) {
   const { id } = req.params;
   const { album, artist, content, genre, rating, title, author } = req.body;
-  const review = prisma?.review.update({
+  const review = prisma.review.update({
     where: {
       id: Number(id),
     },
@@ -53,7 +54,7 @@ export function updateReview(req: Request, res: Response) {
 
 export function deleteReview(req: Request, res: Response) {
   const { id } = req.params;
-  const review = prisma?.review.delete({
+  const review = prisma.review.delete({
     where: {
       id: Number(id),
     },
