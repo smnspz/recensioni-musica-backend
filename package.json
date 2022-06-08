@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install",
-    "scriptname": "husky install"
+    "local": "cross-env NODE_ENV=local",
+    "prod": "cross-env NODE_ENV=prod",
+    "dev": "npm run local && nodemon ./src/index.ts",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^17.0.38",
+    "cross-env": "^7.0.3",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.0",
     "nodemon": "^2.0.16",
