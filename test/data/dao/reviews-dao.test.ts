@@ -1,5 +1,5 @@
 import { prismaMock } from "../setup/singleton";
-import { createUser } from "../../../src/data/dao/users-dao";
+import { createUser, updateUser } from "../../../src/data/dao/users-dao";
 
 test("Should create new user ", async () => {
   const user = {
@@ -16,5 +16,23 @@ test("Should create new user ", async () => {
     email: "john@appleseed.com",
     password: "12345678",
     username: "John",
+  });
+});
+
+test("Should update username", async () => {
+  const updatedUser = {
+    id: 1,
+    email: "john@appleseed.com",
+    password: "12345678",
+    username: "John Appleseed",
+  };
+
+  prismaMock.user.update.mockResolvedValue(updatedUser);
+
+  await expect(updateUser(updatedUser)).resolves.toEqual({
+    id: 1,
+    email: "john@appleseed.com",
+    password: "12345678",
+    username: "John Appleseed",
   });
 });

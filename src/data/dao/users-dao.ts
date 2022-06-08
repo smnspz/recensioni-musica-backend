@@ -22,20 +22,13 @@ export async function createUser(user: User) {
   return await prisma.user.create({ data: user });
 }
 
-export async function updateUser(req: Request, res: Response) {
-  const { id } = req.params;
-  const { email, password, username } = req.body;
-  const user = await prisma.user.update({
+export async function updateUser(user: User) {
+  return await prisma.user.update({
     where: {
-      id: Number(id),
+      id: user.id,
     },
-    data: {
-      email,
-      password,
-      username,
-    },
+    data: user,
   });
-  return res.json(user);
 }
 
 export async function deleteUser(req: Request, res: Response) {
