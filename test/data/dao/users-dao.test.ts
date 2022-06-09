@@ -1,4 +1,3 @@
-import { prismaMock } from "../setup/singleton";
 import {
   createUser,
   getAllUsers,
@@ -6,49 +5,40 @@ import {
   updateUser,
   deleteUser,
 } from "../../../src/data/dao/users-dao";
+import { User } from "@prisma/client";
 
 describe("UserDao tests", () => {
   test("Should create new user ", async () => {
-    const user = {
+    const user: User = {
       id: 145143,
       email: "john@appleseed.com",
       password: "12345678",
       username: "John",
     };
 
-    prismaMock.user.create.mockResolvedValue(user);
-
     await expect(createUser(user)).resolves.toEqual(user);
   });
 
   test("Should update username ", async () => {
-    const updatedUser = {
+    const updatedUser: User = {
       id: 145143,
       email: "john@appleseed.com",
       password: "12345678",
       username: "John Appleseed",
     };
 
-    prismaMock.user.update.mockResolvedValue(updatedUser);
-
-    await expect(updateUser(updatedUser)).resolves.toEqual({
-      id: 145143,
-      email: "john@appleseed.com",
-      password: "12345678",
-      username: "John Appleseed",
-    });
+    await expect(updateUser(updatedUser)).resolves.toEqual(updatedUser);
   });
 
   test("Should get all users ", async () => {
-    const newUser = {
+    const newUser: User = {
       id: 145144,
       email: "franklin@theturtle.com",
       password: "12345678",
       username: "Franklin",
     };
 
-    prismaMock.user.create.mockResolvedValue(newUser);
-    await expect(createUser(newUser)).resolves.toEqual(newUser);
+    await createUser(newUser);
     await expect(getAllUsers()).resolves.toHaveLength(2);
   });
 
@@ -62,25 +52,17 @@ describe("UserDao tests", () => {
   });
 
   test("Should delete user ", async () => {
-    const usersToDelete = [
-      {
-        id: 145143,
-        email: "john@appleseed.com",
-        password: "12345678",
-        username: "John Appleseed",
-      },
-      {
-        id: 145144,
-        email: "franklin@theturtle.com",
-        password: "12345678",
-        username: "Franklin",
-      },
-    ];
+    const userToDelete: User = {
+      id: 145144,
+      email: "franklin@theturtle.com",
+      password: "12345678",
+      username: "Franklin",
+    };
 
-    prismaMock.user.delete.mockResolvedValue(usersToDelete[0]);
-    await expect(deleteUser(145143)).resolves.toStrictEqual(usersToDelete[0]);
+    await expect(deleteUser(145144)).resolves.toStrictEqual(userToDelete);
+  });
 
-    prismaMock.user.delete.mockResolvedValue(usersToDelete[1]);
-    await expect(deleteUser(145144)).resolves.toStrictEqual(usersToDelete[1]);
+  afterAll(async () => {
+    await deleteUser(145143);
   });
 });
