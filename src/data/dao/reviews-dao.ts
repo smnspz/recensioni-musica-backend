@@ -1,63 +1,22 @@
-import { Request, Response } from "express";
+import { Review } from "@prisma/client";
 import prisma from "../db/prisma-client";
 
-export async function getAllReview(req: Request, res: Response) {
-  const reviews = await prisma.review.findMany();
-  return res.json(reviews);
-}
+export const getAllReview = async () => await prisma.review.findMany();
 
-export async function getReviewById(req: Request, res: Response) {
-  const { id } = req.params;
-  const review = await prisma.review.findUnique({
+export const getReviewById = async (id: number) =>
+  await prisma.review.findUnique({ where: { id } });
+
+export const createReview = async (review: Review) =>
+  await prisma.review.create({ data: review });
+
+export const updateReview = async (review: Review) => {
+  return await prisma.review.update({
     where: {
-      id: Number(id),
+      id: review.id,
     },
+    data: review,
   });
-  return res.json(review);
-}
+};
 
-export async function createReview(req: Request, res: Response) {
-  const { album, artist, content, genre, rating, title, author } = req.body;
-  const review = await prisma.review.create({
-    data: {
-      album,
-      artist,
-      content,
-      genre,
-      rating,
-      title,
-      author,
-    },
-  });
-  return res.json(review);
-}
-
-export function updateReview(req: Request, res: Response) {
-  const { id } = req.params;
-  const { album, artist, content, genre, rating, title, author } = req.body;
-  const review = prisma.review.update({
-    where: {
-      id: Number(id),
-    },
-    data: {
-      album,
-      artist,
-      content,
-      genre,
-      rating,
-      title,
-      author,
-    },
-  });
-  return res.json(review);
-}
-
-export function deleteReview(req: Request, res: Response) {
-  const { id } = req.params;
-  const review = prisma.review.delete({
-    where: {
-      id: Number(id),
-    },
-  });
-  return res.json(review);
-}
+export const deleteReview = async (id: number) =>
+  await prisma.review.delete({ where: { id: id } });

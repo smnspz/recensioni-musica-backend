@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export interface Review {
   id: number;
   album: string;
@@ -6,4 +8,7 @@ export interface Review {
   genre: string;
   rating: number;
   title: string;
+  authorId: number;
+  // createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput;
+  // updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput;
 }

@@ -11,17 +11,17 @@ datasource db {
 }
 
 model Review {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String   @db.Text
-  artist    String   @db.VarChar(255)
-  album     String   @db.VarChar(255)
-  genre     String   @db.VarChar(255)
-  rating    Int      @db.Integer
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  title     String    @db.VarChar(255)
+  content   String    @db.Text
+  artist    String    @db.VarChar(255)
+  album     String    @db.VarChar(255)
+  genre     String    @db.VarChar(255)
+  rating    Int       @db.Integer
+  published Boolean   @default(false)
+  author    User      @relation(fields: [authorId], references: [id])
   authorId  Int
 }
 
