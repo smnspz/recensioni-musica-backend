@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prisma-studio": "dotenv -e ./.envs/.env.local -- npx prisma studio",
-    "migrate": "dotenv -e ./.envs/.env.local -- npx prisma migrate dev",
+    "prisma-studio-local": "dotenv -e ./.envs/.env.local -- prisma studio",
+    "prisma-studio-test": "dotenv -e ./.envs/.env.test -- prisma studio",
+    "migrate": "dotenv -e ./.envs/.env.local -- prisma migrate dev",
     "local": "cross-env NODE_ENV=local",
     "prod": "cross-env NODE_ENV=prod",
     "dev": "npm run local && nodemon ./src/index.ts",
     "prepare": "husky install",
-    "test": "dotenv -e ./.envs/.env.local jest -i"
+    "test": "dotenv -e ./.envs/.env.test jest -i"
   },
   "keywords": [],
   "author": "",
