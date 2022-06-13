@@ -1,12 +1,12 @@
 import { Profile, User } from "@prisma/client";
-import { createUser, deleteUser } from "../../../src/data/dao/users-dao";
+import { createUser, deleteUser } from "../../../src/data/dao/users.dao";
 import {
   createProfile,
   deleteProfile,
   getAllProfile,
   getProfileById,
   updateProfile,
-} from "../../../src/data/dao/profiles-dao";
+} from "../../../src/data/dao/profiles.dao";
 
 describe("ProfilesDao tests", () => {
   beforeAll(async () => {

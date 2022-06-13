@@ -4,18 +4,25 @@ import {
   getUserById,
   updateUser,
   deleteUser,
-} from "../../../src/data/dao/users-dao";
+} from "../../../src/data/dao/users.dao";
 import { User } from "@prisma/client";
+
+const user: User = {
+  id: 145143,
+  email: "john@appleseed.com",
+  password: "12345678",
+  username: "John",
+};
+
+const newUser: User = {
+  id: 145144,
+  email: "franklin@theturtle.com",
+  password: "12345678",
+  username: "Franklin",
+};
 
 describe("UserDao tests", () => {
   test("Should create new user ", async () => {
-    const user: User = {
-      id: 145143,
-      email: "john@appleseed.com",
-      password: "12345678",
-      username: "John",
-    };
-
     await expect(createUser(user)).resolves.toEqual(user);
   });
 
@@ -31,15 +38,8 @@ describe("UserDao tests", () => {
   });
 
   test("Should get all users ", async () => {
-    const newUser: User = {
-      id: 145144,
-      email: "franklin@theturtle.com",
-      password: "12345678",
-      username: "Franklin",
-    };
-
     await createUser(newUser);
-    await expect(getAllUsers()).resolves.toHaveLength(2);
+    await expect((await getAllUsers()).length).toBeGreaterThan(1);
   });
 
   test("Should get user by ID ", async () => {
