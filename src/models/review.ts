@@ -1,7 +1,5 @@
-import { Prisma } from "@prisma/client";
-
 export interface Review {
-  id: number;
+  id: number | undefined;
   album: string;
   artist: string;
   content: string;
@@ -9,6 +7,4 @@ export interface Review {
   rating: number;
   title: string;
   authorId: number;
-  // createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput;
-  // updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput;
 }

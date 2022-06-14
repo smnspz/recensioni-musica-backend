@@ -4,6 +4,7 @@ import {
   getUserById,
   updateUser,
   deleteUser,
+  getUserByEmail,
 } from "../../../src/data/dao/users.dao";
 import { User } from "@prisma/client";
 
@@ -49,6 +50,10 @@ describe("UserDao tests", () => {
       password: "12345678",
       username: "Franklin",
     });
+  });
+
+  test("Should get user by email ", async () => {
+    await expect(getUserByEmail(newUser.email)).resolves.toStrictEqual(newUser);
   });
 
   test("Should delete user ", async () => {

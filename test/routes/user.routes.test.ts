@@ -8,7 +8,7 @@ const user: User = {
   id: undefined,
   email: "john@example.com",
   password: "123456",
-  username: "johnmmyy",
+  username: "johnny",
 };
 
 describe("User routes", () => {
@@ -29,9 +29,12 @@ describe("User routes", () => {
   });
 
   test("Should delete user ", async () => {
+    const userToDelete = await (
+      await request.get(`/user/${user.username}`)
+    ).body.id;
+
     await request
-      .delete(`/user/${user.id}`)
-      .set("Accept", "application/json")
+      .delete(`/user/${userToDelete}`)
       .set("Accept", "application/json")
       .expect((res) => {
         res.body = user;
@@ -44,7 +47,6 @@ describe("User routes", () => {
       .post("/signup")
       .set("Accept", "application/json")
       .send({
-        email: user.email,
         password: user.password,
         username: user.username,
       })
@@ -69,6 +71,35 @@ describe("User routes", () => {
       .expect((res) => {
         res.body = {
           errors: ["Must be a valid email"],
+        };
+        res.status = 400;
+      });
+  });
+
+  test("Should return the user ", async () => {
+    await request
+      .get(`/user/${user.username}`)
+      .set("Accept", "application/json")
+      .expect((res) => {
+        res.body = user;
+        res.status = 200;
+      });
+  });
+
+  test("Should return error when email already exists", async () => {
+    await request.post("/signup").send(user);
+    await request
+      .post("/signup")
+      .set("Accept", "application/json")
+      .send({
+        id: user.id,
+        email: user.email,
+        password: user.password,
+        username: user.username,
+      })
+      .expect((res) => {
+        res.body = {
+          errors: ["Email already exists"],
         };
         res.status = 400;
       });

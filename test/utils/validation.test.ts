@@ -14,9 +14,4 @@ describe("Validation tests", () => {
     const validatedUser = await validateUser(user);
     expect(validatedUser).toEqual(user);
   });
-
-  // test("Should return an error when missing required fields", async () => {
-  //     user.email = "";
-  //     expect(await validateUser(user)).toThrow(ValidationError);
-  // })
 });
