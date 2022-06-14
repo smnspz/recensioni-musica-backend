@@ -1,5 +1,5 @@
 import { DOTENV_PATH } from "../config/settings";
-import { userRoutes } from "./routes/_index";
+import * as router from "./routes/_index";
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
@@ -10,6 +10,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(userRoutes);
+app.use("/", router.indexRoutes);
+app.use(router.userRoutes);
+app.use("/auth", router.authRoutes);
 
 export default app;

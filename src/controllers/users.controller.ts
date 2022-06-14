@@ -7,6 +7,7 @@ import {
   createJwt,
   refreshJwt,
 } from "../logic/user.logic";
+import { User } from "../models/user";
 import { validateUser } from "../utils/validation";
 
 export const createUser = async (req: Request, res: Response) => {
@@ -83,7 +84,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { username, password }: User = req.body;
   const user = await dao.getUserByUsername(username);
   if (!user) {
     return res.status(400).send({ message: "User not found" });
