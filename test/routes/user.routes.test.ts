@@ -104,4 +104,26 @@ describe("User routes", () => {
         res.status = 400;
       });
   });
+
+  test("Should return JWT ", async () => {
+    await request.post("/signup").send({
+      email: "test@test.com",
+      password: user.password,
+      username: "test_username",
+    });
+
+    await request
+      .post("/login")
+      .set("Accept", "application/json")
+      .send({
+        username: "test_username",
+        password: user.password,
+      })
+      .expect((res) => {
+        res.body = {
+          token: res.body.token,
+        };
+        res.status = 200;
+      });
+  });
 });

@@ -1,9 +1,12 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Request, Response } from "express";
-import { rmSync } from "fs";
 import { ValidationError } from "yup";
 import * as dao from "../data/dao/users.dao";
-import { makeCreateUser } from "../logic/user.logic";
+import {
+  makeCreateUser,
+  comparePasswords,
+  createJwt,
+  refreshJwt,
+} from "../logic/user.logic";
 import { validateUser } from "../utils/validation";
 
 export const createUser = async (req: Request, res: Response) => {
@@ -77,4 +80,26 @@ export const deleteUser = async (req: Request, res: Response) => {
   const id = req.params.id;
   const result = await dao.deleteUser(Number(id));
   return res.json(result);
+};
+
+export const login = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+  const user = await dao.getUserByUsername(username);
+  if (!user) {
+    return res.status(400).send({ message: "User not found" });
+  }
+  const validCredentials = await comparePasswords(password, user.password);
+  if (!validCredentials) {
+    return res.status(400).send({ message: "Invalid credentials" });
+  }
+
+  const token = createJwt(user);
+  const refreshToken = refreshJwt(user);
+
+  res.send({
+    token,
+    tokenExpiresIn: process.env.JWT_DURATION,
+    refreshToken,
+    refreshTokenExpiresIn: process.env.REFRESH_EXPIRES_IN,
+  });
 };
