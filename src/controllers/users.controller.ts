@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ValidationError } from "yup";
 import {
   createUser,
   deleteUser,
@@ -7,11 +8,17 @@ import {
   updateUser,
 } from "../data/dao/users.dao";
 import { makeCreateUser } from "../logic/user.logic";
+import { validateUser } from "../utils/validation";
 
 export const createUserController = async (req: Request, res: Response) => {
-  const user = await makeCreateUser(req.body);
-  const result = await createUser(user);
-  return res.json(result);
+  try {
+    const validatedUser = await validateUser(req.body);
+    const user = await makeCreateUser(validatedUser);
+    const result = await createUser(user);
+    return res.json(result);
+  } catch (e: any) {
+    return res.status(400).send({ errors: e.errors });
+  }
 };
 
 export const updateUserController = async (req: Request, res: Response) => {
