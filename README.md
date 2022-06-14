@@ -27,10 +27,10 @@ npm run dev
 
 ```
 
-Make sure you fill out the `.env.example` before running `npm run dev`, otherwise Prisma will not find the database connection url.
+Make sure you fill out the `.env.example` before running `npm run dev`, otherwise Prisma will not find the database connection string.
 
 ## Authors
 
 Contributors names and contact info
 
-ex. [@smnspz](https://twitter.com/smnspz)
+[@smnspz](https://twitter.com/smnspz)
