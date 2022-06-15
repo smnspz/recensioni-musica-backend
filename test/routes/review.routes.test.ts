@@ -7,10 +7,15 @@ import * as usersDao from "../../src/data/dao/users.dao";
 const request = supertest(app);
 
 const user: User = {
-  id: undefined,
   email: "john@example.com",
   password: "123456",
   username: "johnny",
+};
+
+const secondUser: User = {
+  email: "mario@rossi.it",
+  password: "123456",
+  username: "mario",
 };
 
 const review: Review = {
@@ -25,8 +30,10 @@ const review: Review = {
 };
 
 let token: string;
+let secondToken: string;
 let authorId: number;
 let reviewId: number;
+let secondAuthorId: number;
 
 describe("Review routes", () => {
   beforeAll(async () => {
@@ -34,6 +41,12 @@ describe("Review routes", () => {
       email: user.email,
       password: user.password,
       username: user.username,
+    });
+
+    await request.post("/auth/signup").set("Accept", "application/json").send({
+      email: secondUser.email,
+      password: secondUser.password,
+      username: secondUser.username,
     });
 
     const loggedUser = await request
@@ -44,8 +57,18 @@ describe("Review routes", () => {
         password: user.password,
       });
 
+    const loggedSecondUser = await request
+      .post("/auth/login")
+      .set("Accept", "application/json")
+      .send({
+        username: secondUser.username,
+        password: secondUser.password,
+      });
+
     token = loggedUser.body.token;
     authorId = loggedUser.body.user.id;
+    secondToken = loggedSecondUser.body.token;
+    secondAuthorId = loggedSecondUser.body.user.id;
   });
 
   test("Should create review", async () => {
@@ -88,6 +111,29 @@ describe("Review routes", () => {
       .expect((res) => {
         res.body = review;
         res.status = 200;
+      });
+  });
+
+  test("Should not be able to update review of another user", async () => {
+    await request
+      .put(`/review/${reviewId}`)
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${secondToken}`)
+      .send({
+        album: review.album,
+        artist: review.artist,
+        genre: "Rap",
+        rating: review.rating,
+        title: review.title,
+        published: review.published,
+        authorId: secondAuthorId,
+        content: review.content,
+      })
+      .expect((res) => {
+        res.body = {
+          message: "You are not authorized to perform this action",
+        };
+        res.status = 401;
       });
   });
 

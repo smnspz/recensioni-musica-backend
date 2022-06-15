@@ -21,7 +21,9 @@ export const updateReview = async (req: Request, res: Response) => {
       const updatedReview = await dao.updateReview(id, req.body);
       return res.json(updatedReview);
     }
-    return res.status(401).send({ error: "Access denied" });
+    return res
+      .status(401)
+      .send({ error: "You are not authorized to perform this action" });
   } catch (e) {
     return res
       .status(500)
@@ -63,7 +65,9 @@ export const deleteReview = async (req: Request, res: Response) => {
       const result = await dao.deleteReview(id);
       return res.json(result);
     }
-    return res.status(401).send({ error: "Access denied" });
+    return res
+      .status(401)
+      .send({ error: "You are not authorized to perform this action" });
   } catch (e) {
     console.log(e);
     return res

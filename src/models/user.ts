@@ -1,5 +1,5 @@
 export default interface User {
-  id: number | undefined;
+  id?: number;
   email: string;
   password: string;
   username: string;
