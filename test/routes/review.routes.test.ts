@@ -6,7 +6,7 @@ import * as usersDao from "../../src/data/dao/users.dao";
 
 const request = supertest(app);
 
-const user: User = {
+const firstUser: User = {
   email: "john@example.com",
   password: "123456",
   username: "johnny",
@@ -29,18 +29,18 @@ const review: Review = {
   content: "This amazing album is truly amazing",
 };
 
-let token: string;
-let secondToken: string;
-let authorId: number;
-let reviewId: number;
+let firstUserToken: string;
+let secondUserToken: string;
+let firstAuthorId: number;
 let secondAuthorId: number;
+let reviewId: number;
 
 describe("Review routes", () => {
   beforeAll(async () => {
     await request.post("/auth/signup").set("Accept", "application/json").send({
-      email: user.email,
-      password: user.password,
-      username: user.username,
+      email: firstUser.email,
+      password: firstUser.password,
+      username: firstUser.username,
     });
 
     await request.post("/auth/signup").set("Accept", "application/json").send({
@@ -49,15 +49,15 @@ describe("Review routes", () => {
       username: secondUser.username,
     });
 
-    const loggedUser = await request
+    const firstUserLogin = await request
       .post("/auth/login")
       .set("Accept", "application/json")
       .send({
-        username: user.username,
-        password: user.password,
+        username: firstUser.username,
+        password: firstUser.password,
       });
 
-    const loggedSecondUser = await request
+    const secondUserLogin = await request
       .post("/auth/login")
       .set("Accept", "application/json")
       .send({
@@ -65,17 +65,17 @@ describe("Review routes", () => {
         password: secondUser.password,
       });
 
-    token = loggedUser.body.token;
-    authorId = loggedUser.body.user.id;
-    secondToken = loggedSecondUser.body.token;
-    secondAuthorId = loggedSecondUser.body.user.id;
+    firstUserToken = firstUserLogin.body.token;
+    secondUserToken = secondUserLogin.body.token;
+    firstAuthorId = firstUserLogin.body.user.id;
+    secondAuthorId = secondUserLogin.body.user.id;
   });
 
   test("Should create review", async () => {
     await request
       .post("/review")
       .set("Accept", "application/json")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${firstUserToken}`)
       .send({
         album: review.album,
         artist: review.artist,
@@ -83,7 +83,7 @@ describe("Review routes", () => {
         rating: review.rating,
         title: review.title,
         published: review.published,
-        authorId: authorId,
+        authorId: firstAuthorId,
         content: review.content,
       })
       .expect((res) => {
@@ -97,7 +97,7 @@ describe("Review routes", () => {
     await request
       .put(`/review/${reviewId}`)
       .set("Accept", "application/json")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${firstUserToken}`)
       .send({
         album: review.album,
         artist: review.artist,
@@ -105,7 +105,7 @@ describe("Review routes", () => {
         rating: review.rating,
         title: review.title,
         published: review.published,
-        authorId: authorId,
+        authorId: firstAuthorId,
         content: review.content,
       })
       .expect((res) => {
@@ -118,7 +118,7 @@ describe("Review routes", () => {
     await request
       .put(`/review/${reviewId}`)
       .set("Accept", "application/json")
-      .set("Authorization", `Bearer ${secondToken}`)
+      .set("Authorization", `Bearer ${secondUserToken}`)
       .send({
         album: review.album,
         artist: review.artist,
@@ -139,6 +139,6 @@ describe("Review routes", () => {
 
   afterAll(async () => {
     await reviewsDao.deleteReview(reviewId);
-    await usersDao.deleteUser(authorId);
+    await usersDao.deleteUser(firstAuthorId);
   });
 });
