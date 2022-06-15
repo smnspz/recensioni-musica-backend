@@ -27,6 +27,12 @@ npm run dev
 
 ```
 
+### TODO
+
+- Add endpoint to retrieve all reviews of a certain user
+- Add possibilty to soft delete review (makes it unpublished)
+- Change prisma schema and make review published field default to true
+
 Make sure you fill out the `.env.example` before running `npm run dev`, otherwise Prisma will not find the database connection string.
 
 ## Authors

@@ -69,7 +69,6 @@ export const deleteReview = async (req: Request, res: Response) => {
       .status(401)
       .send({ error: "You are not authorized to perform this action" });
   } catch (e) {
-    console.log(e);
     return res
       .status(500)
       .send({ message: "Something went wrong on our end :(" });
