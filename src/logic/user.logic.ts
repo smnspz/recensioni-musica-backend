@@ -1,6 +1,6 @@
-import { User } from "../models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { User } from "../models/_index";
 
 export const makeCreateUser = async (user: User): Promise<User> => {
   const salt = await bcrypt.genSalt(10);

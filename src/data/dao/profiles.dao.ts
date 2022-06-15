@@ -1,4 +1,4 @@
-import { Profile } from "@prisma/client";
+import { Profile } from "../../models/_index";
 import prisma from "../db/prisma-client";
 
 export const getAllProfile = async () => await prisma.profile.findMany();

@@ -1,6 +1,6 @@
 # express-playground
 
-A cookiecutter template for a REST api backend built with typescript, express, prisma and pos.
+A cookiecutter template for a REST api backend built with typescript, express, prisma and postgres.
 
 ## Getting Started
 

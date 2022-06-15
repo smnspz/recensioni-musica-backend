@@ -50,7 +50,9 @@ describe("ReviewsDao tests", () => {
       createdAt: null,
       updatedAt: null,
     };
-    await expect(updateReview(updatedReview)).resolves.toEqual(updatedReview);
+    await expect(
+      updateReview(updatedReview.id, updatedReview)
+    ).resolves.toEqual(updatedReview);
   });
 
   test("Should get all reviews ", async () => {
@@ -69,7 +71,7 @@ describe("ReviewsDao tests", () => {
     };
     await createReview(review);
 
-    await expect(getAllReview()).resolves.toHaveLength(2);
+    expect((await getAllReview()).length).toBeGreaterThan(1);
   });
 
   test("Should get review by ID ", async () => {

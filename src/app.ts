@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/", router.indexRoutes);
 app.use(router.userRoutes);
+app.use(router.reviewRoutes);
 app.use("/auth", router.authRoutes);
 
 export default app;

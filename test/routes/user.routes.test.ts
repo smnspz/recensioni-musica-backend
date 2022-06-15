@@ -1,6 +1,6 @@
 import app from "../../src/app";
 import supertest from "supertest";
-import { User } from "../../src/models/user";
+import { User } from "../../src/models/_index";
 
 const request = supertest(app);
 
@@ -127,5 +127,14 @@ describe("User routes", () => {
         };
         res.status = 400;
       });
+  });
+
+  afterAll(async () => {
+    const userToDelete = await request
+      .get(`/user/${user.username}`)
+      .set("Authorization", `Bearer ${token}`);
+    await request
+      .delete(`/user/${userToDelete.body.id}`)
+      .set("Authorization", `Bearer ${token}`);
   });
 });

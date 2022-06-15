@@ -1,11 +1,4 @@
-import {
-  createUser,
-  getAllUsers,
-  getUserById,
-  updateUser,
-  deleteUser,
-  getUserByEmail,
-} from "../../../src/data/dao/users.dao";
+import * as dao from "../../../src/data/dao/users.dao";
 import { User } from "@prisma/client";
 
 const user: User = {
@@ -24,7 +17,7 @@ const newUser: User = {
 
 describe("UserDao tests", () => {
   test("Should create new user ", async () => {
-    await expect(createUser(user)).resolves.toEqual(user);
+    await expect(dao.createUser(user)).resolves.toEqual(user);
   });
 
   test("Should update username ", async () => {
@@ -35,16 +28,16 @@ describe("UserDao tests", () => {
       username: "John Appleseed",
     };
 
-    await expect(updateUser(updatedUser)).resolves.toEqual(updatedUser);
+    await expect(dao.updateUser(updatedUser)).resolves.toEqual(updatedUser);
   });
 
   test("Should get all users ", async () => {
-    await createUser(newUser);
-    await expect((await getAllUsers()).length).toBeGreaterThan(1);
+    await dao.createUser(newUser);
+    await expect((await dao.getAllUsers()).length).toBeGreaterThan(1);
   });
 
   test("Should get user by ID ", async () => {
-    await expect(getUserById(145144)).resolves.toEqual({
+    await expect(dao.getUserById(145144)).resolves.toEqual({
       id: 145144,
       email: "franklin@theturtle.com",
       password: "12345678",
@@ -53,7 +46,9 @@ describe("UserDao tests", () => {
   });
 
   test("Should get user by email ", async () => {
-    await expect(getUserByEmail(newUser.email)).resolves.toStrictEqual(newUser);
+    await expect(dao.getUserByEmail(newUser.email)).resolves.toStrictEqual(
+      newUser
+    );
   });
 
   test("Should delete user ", async () => {
@@ -64,10 +59,10 @@ describe("UserDao tests", () => {
       username: "Franklin",
     };
 
-    await expect(deleteUser(145144)).resolves.toStrictEqual(userToDelete);
+    await expect(dao.deleteUser(145144)).resolves.toStrictEqual(userToDelete);
   });
 
   afterAll(async () => {
-    await deleteUser(145143);
+    await dao.deleteUser(145143);
   });
 });

@@ -7,7 +7,7 @@ import {
   createJwt,
   refreshJwt,
 } from "../logic/user.logic";
-import { User } from "../models/user";
+import { User } from "../models/_index";
 import { validateUser } from "../utils/validation";
 
 export const createUser = async (req: Request, res: Response) => {
@@ -98,6 +98,10 @@ export const login = async (req: Request, res: Response) => {
   const refreshToken = refreshJwt(user);
 
   res.send({
+    user: {
+      id: user.id,
+      username: user.username,
+    },
     token,
     tokenExpiresIn: process.env.JWT_DURATION,
     refreshToken,
