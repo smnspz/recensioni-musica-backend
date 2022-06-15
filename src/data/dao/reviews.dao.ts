@@ -19,6 +19,5 @@ export const updateReview = async (id: number, review: Review) => {
 };
 
 export const deleteReview = async (id: number) => {
-  console.log(id);
   return await prisma.review.delete({ where: { id: id } });
 };

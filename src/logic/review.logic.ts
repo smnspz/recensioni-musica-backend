@@ -1,4 +1,3 @@
-import { Review } from "../models/_index";
 import * as helpers from "../utils/helpers";
 
 export const canUserModifyReview = (

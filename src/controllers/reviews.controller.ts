@@ -58,14 +58,12 @@ export const deleteReview = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const token = req.headers["authorization"]?.replace("Bearer ", "");
     const reviewToDelete = await dao.getReviewById(id);
-    console.log(`id: ${id}`);
-    console.log(`reviewToDelete: ${reviewToDelete}`);
     if (
       reviewToDelete &&
       canUserModifyReview(token!, reviewToDelete.authorId)
     ) {
-      const result = await dao.deleteReview(id);
-      return res.json(result);
+      await dao.deleteReview(id);
+      return res.json({});
     }
     return res
       .status(401)

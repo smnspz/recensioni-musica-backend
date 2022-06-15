@@ -126,19 +126,43 @@ describe("Review routes", () => {
         rating: review.rating,
         title: review.title,
         published: review.published,
-        authorId: secondAuthorId,
+        authorId: firstAuthorId,
         content: review.content,
       })
       .expect((res) => {
         res.body = {
-          message: "You are not authorized to perform this action",
+          error: "You are not authorized to perform this action",
         };
         res.status = 401;
       });
   });
 
+  test("Should not be able to delete review of another user", async () => {
+    await request
+      .delete(`/review/${reviewId}`)
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${secondUserToken}`)
+      .expect((res) => {
+        res.body = {
+          error: "You are not authorized to perform this action",
+        };
+        res.status = 401;
+      });
+  });
+
+  test("Should delete review", async () => {
+    await request
+      .delete(`/review/${reviewId}`)
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${firstUserToken}`)
+      .expect((res) => {
+        res.body = {};
+        res.status = 200;
+      });
+  });
+
   afterAll(async () => {
-    await reviewsDao.deleteReview(reviewId);
     await usersDao.deleteUser(firstAuthorId);
+    await usersDao.deleteUser(secondAuthorId);
   });
 });
