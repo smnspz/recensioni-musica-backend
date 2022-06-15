@@ -70,6 +70,27 @@ describe("Review routes", () => {
       });
   });
 
+  test("Should update review ", async () => {
+    await request
+      .put(`/review/${reviewId}`)
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        album: review.album,
+        artist: review.artist,
+        genre: "Rap",
+        rating: review.rating,
+        title: review.title,
+        published: review.published,
+        authorId: authorId,
+        content: review.content,
+      })
+      .expect((res) => {
+        res.body = review;
+        res.status = 200;
+      });
+  });
+
   afterAll(async () => {
     await reviewsDao.deleteReview(reviewId);
     await usersDao.deleteUser(authorId);
