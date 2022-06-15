@@ -1,5 +1,5 @@
-import { DOTENV_PATH } from "../config/settings";
-import * as router from "./routes/_index";
+import { DOTENV_PATH } from "../config/settings.js";
+import * as router from "./routes/_index.js";
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";

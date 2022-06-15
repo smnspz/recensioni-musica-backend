@@ -1,5 +1,5 @@
-import { Profile } from "../../models/_index";
-import prisma from "../db/prisma-client";
+import { Profile } from "../../models/_index.js";
+import prisma from "../db/prisma-client.js";
 
 export const getAllProfile = async () => await prisma.profile.findMany();
 

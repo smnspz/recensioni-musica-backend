@@ -34,6 +34,8 @@ Make sure you fill out the `.env.example` before running `npm run dev`, otherwis
 - Add endpoint to retrieve all reviews of a certain user
 - Add possibilty to soft delete review (makes it unpublished)
 - Change prisma schema and make review published field default to true
+- Find a way to remove the terrible extension (.js) on imports caused by the `module: "CommonJS"` in the `tsconfig.json` file
+- Find out how to use path aliases
 
 ## Authors
 

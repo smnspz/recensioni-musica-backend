@@ -19,7 +19,7 @@
     "migrate-test": "dotenv -e ./.envs/.env.test -- prisma migrate dev",
     "local": "cross-env NODE_ENV=local",
     "prod": "cross-env NODE_ENV=prod",
-    "dev": "npm run local && nodemon ./src/start.ts",
+    "dev": "npx dotenv -e ./.envs/.env.local -- node --no-warnings --loader=ts-node/esm src/start.ts",
     "prepare": "husky install",
     "test": "dotenv -e ./.envs/.env.test -- jest -i --runInBand --forceExit"
   },

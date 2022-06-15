@@ -1,4 +1,4 @@
-import * as helpers from "../utils/helpers";
+import * as helpers from "../utils/helpers.js";
 
 export const canUserModifyReview = (
   token: string,

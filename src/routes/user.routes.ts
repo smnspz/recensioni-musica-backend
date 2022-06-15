@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as controller from "../controllers/users.controller";
-import checkAuth from "../middleware/authorization";
+import * as controller from "../controllers/users.controller.js";
+import checkAuth from "../middleware/authorization.js";
 
 const router = Router();
 

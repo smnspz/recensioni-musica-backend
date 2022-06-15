@@ -1,4 +1,4 @@
-import { User } from "../models/_index";
+import { User } from "../models/_index.js";
 import * as yup from "yup";
 
 export const validateUser = async (user: User) => {

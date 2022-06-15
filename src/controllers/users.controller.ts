@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { ValidationError } from "yup";
-import * as dao from "../data/dao/users.dao";
+import * as dao from "../data/dao/users.dao.js";
 import {
   makeCreateUser,
   comparePasswords,
   createJwt,
   refreshJwt,
-} from "../logic/user.logic";
-import { User } from "../models/_index";
-import { validateUser } from "../utils/validation";
+} from "../logic/user.logic.js";
+import { User } from "../models/_index.js";
+import { validateUser } from "../utils/validation.js";
 
 export const createUser = async (req: Request, res: Response) => {
   try {

@@ -1,6 +1,6 @@
-import * as dao from "../data/dao/reviews.dao";
+import * as dao from "../data/dao/reviews.dao.js";
 import { Request, Response } from "express";
-import { canUserModifyReview } from "../logic/review.logic";
+import { canUserModifyReview } from "../logic/review.logic.js";
 
 export const createReview = async (req: Request, res: Response) => {
   try {
