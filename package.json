@@ -37,7 +37,7 @@
     "migrate-local": "dotenv -e ./.envs/.env.local -- prisma migrate dev",
     "migrate-test": "dotenv -e ./.envs/.env.test -- prisma migrate dev",
     "dev": "npm test && dotenv -e ./.envs/.env.local -- nodemon --exec 'node --no-warnings --loader=ts-node/esm' src/start.ts",
-    "start": "node dist/start.js",
+    "start": "node dist/src/start.js",
     "postinstall": "tsc",
     "prepare": "husky install",
     "test": "dotenv -e ./.envs/.env.test -- jest -i --runInBand --forceExit"
