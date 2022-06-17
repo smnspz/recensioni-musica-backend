@@ -1,6 +1,6 @@
-# express-playground
+# Recensioni Musica
 
-A cookiecutter template for a REST api backend built with typescript, express, prisma and postgres.
+A REST api backend for a school project.
 
 ## Getting Started
 

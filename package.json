@@ -1,10 +1,10 @@
 {
-  "name": "express-playground",
+  "name": "recensioni-musica-backend",
   "version": "1.0.0",
   "description": "",
   "author": "Simone Rosani",
   "license": "ISC",
-  "main": "index.ts",
+  "main": "src/start.ts",
   "type": "module",
   "jest": {
     "clearMocks": true,
