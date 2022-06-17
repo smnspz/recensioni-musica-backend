@@ -1,6 +1,6 @@
 export default interface Profile {
-  id: number | undefined;
-  bio: string | null;
-  profilePic: string | null;
+  id?: number;
+  bio?: string;
+  profilePic?: string;
   userId: number;
 }

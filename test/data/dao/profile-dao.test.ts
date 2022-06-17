@@ -3,7 +3,7 @@ import { createUser, deleteUser } from "../../../src/data/dao/users.dao";
 import {
   createProfile,
   deleteProfile,
-  getAllProfile,
+  getAllProfiles,
   getProfileById,
   updateProfile,
 } from "../../../src/data/dao/profiles.dao";
@@ -44,9 +44,9 @@ describe("ProfilesDao tests", () => {
       profilePic: null,
       userId: 113431,
     };
-    await expect(updateProfile(updatedProfile)).resolves.toEqual(
-      updatedProfile
-    );
+    await expect(
+      updateProfile(updatedProfile.id, updatedProfile)
+    ).resolves.toEqual(updatedProfile);
   });
 
   test("Should get all profiles ", async () => {
@@ -58,7 +58,7 @@ describe("ProfilesDao tests", () => {
     };
     await createProfile(profile);
 
-    await expect(getAllProfile()).resolves.toHaveLength(2);
+    expect((await getAllProfiles()).length).toBeGreaterThan(1);
   });
 
   test("Should get profile by ID ", async () => {

@@ -1,9 +1,9 @@
 import * as helpers from "../utils/helpers.js";
 
-export const canUserModifyReview = (
+export const canUserModify = (
   token: string,
-  authorId: number
+  entityToModifyId: number
 ): Boolean => {
   const userId = helpers.getJsonFromJWT(token).id;
-  return userId === authorId;
+  return userId === entityToModifyId;
 };

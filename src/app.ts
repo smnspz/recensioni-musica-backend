@@ -13,6 +13,7 @@ app.use(cors());
 app.use("/", router.indexRoutes);
 app.use(router.userRoutes);
 app.use(router.reviewRoutes);
+app.use(router.profileRoutes);
 app.use("/auth", router.authRoutes);
 
 export default app;

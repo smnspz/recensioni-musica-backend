@@ -21,15 +21,15 @@ model Review {
   genre     String    @db.VarChar(255)
   rating    Int       @db.Integer
   published Boolean   @default(false)
-  author    User      @relation(fields: [authorId], references: [id])
-  authorId  Int
+  author    User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId  Int?
 }
 
 model Profile {
   id         Int     @id @default(autoincrement())
   bio        String?
   profilePic String?
-  user       User    @relation(fields: [userId], references: [id])
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int     @unique
 }
 

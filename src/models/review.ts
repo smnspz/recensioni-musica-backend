@@ -3,7 +3,7 @@ export default interface Review {
   album: string;
   artist: string;
   content: string;
-  published: boolean | undefined;
+  published?: boolean;
   genre: string;
   rating: number;
   title: string;

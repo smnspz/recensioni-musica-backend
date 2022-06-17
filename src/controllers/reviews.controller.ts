@@ -1,6 +1,6 @@
 import * as dao from "../data/dao/reviews.dao.js";
 import { Request, Response } from "express";
-import { canUserModifyReview } from "../logic/review.logic.js";
+import { canUserModify } from "../logic/review.logic.js";
 
 export const createReview = async (req: Request, res: Response) => {
   try {
@@ -16,7 +16,7 @@ export const createReview = async (req: Request, res: Response) => {
 export const updateReview = async (req: Request, res: Response) => {
   try {
     const token = req.headers["authorization"]?.replace("Bearer ", "");
-    if (canUserModifyReview(token!, req.body.authorId)) {
+    if (canUserModify(token!, req.body.authorId)) {
       const id = Number(req.params.id);
       const updatedReview = await dao.updateReview(id, req.body);
       return res.json(updatedReview);
@@ -58,10 +58,7 @@ export const deleteReview = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const token = req.headers["authorization"]?.replace("Bearer ", "");
     const reviewToDelete = await dao.getReviewById(id);
-    if (
-      reviewToDelete &&
-      canUserModifyReview(token!, reviewToDelete.authorId)
-    ) {
+    if (reviewToDelete && canUserModify(token!, reviewToDelete.authorId)) {
       await dao.deleteReview(id);
       return res.json({});
     }

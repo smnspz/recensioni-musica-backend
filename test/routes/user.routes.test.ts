@@ -5,7 +5,6 @@ import { User } from "../../src/models/_index";
 const request = supertest(app);
 
 const user: User = {
-  id: undefined,
   email: "john@example.com",
   password: "123456",
   username: "johnny",
@@ -19,7 +18,6 @@ describe("User routes", () => {
       .post("/auth/signup")
       .set("Accept", "application/json")
       .send({
-        id: user.id,
         email: user.email,
         password: user.password,
         username: user.username,
